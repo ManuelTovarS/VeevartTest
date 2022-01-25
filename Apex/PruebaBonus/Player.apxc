@@ -1,0 +1,19 @@
+public class Player {
+
+    public Integer lastPosition;
+
+    //Método constructor
+    public Player(Integer lastPosition){
+        this.lastPosition = lastPosition;
+    }
+    
+    //Método Getter para obtener la posición del jugador
+    public Integer getLastPosition(){
+        return lastPosition;
+    }
+    
+    //Método Setter para cambiar la posición del jugador
+    public void setLastPosition(Integer lastPosition){
+        this.lastPosition = lastPosition;
+    }
+}

@@ -1,0 +1,65 @@
+public class Turn {
+
+    public Integer scoreDice;
+    public Integer movePosition;
+    
+    //Metodo constructor
+    public Turn(){
+    }
+    
+    //Metodo que se ejecuta cada turno por Jugador y representa el valor
+    //obtenido por el dado, dicho valor se almacena en la variable scoreDice y
+    //asegura que el valor que pueda obtener este entre 1 y 6
+    public void diceThrow(){
+        scoreDice = (Integer) (Math.random() * (1-7) + 7);
+    }
+    
+    //Método que se encarga de mover el jugador y actualizar su posicion en su
+    //turno por el tablero, segun la casilla de ultima posición. Asi mismo,
+    //tiene en cuenta si supero la meta para poder aplicar la penalizacion
+    //mediante el metodo spot() valida si en la casilla que cayo es una
+    //escalera o serpiente.
+    public Integer moveTurn(List<String> board, Integer lastPosition) {
+        try {
+            Integer move = lastPosition + scoreDice;
+            System.debug('----------------------------');
+            System.debug('La casilla donde esta antes del turno es: ' + lastPosition);
+            System.debug('El dado cayo en: ' + scoreDice);
+            System.debug('Se mueve a la casilla: ' + move);
+            spot(board, move);
+        } catch (ListException e) {
+            Integer penalizacion = (lastPosition + scoreDice) - 25;
+            movePosition = 25 - penalizacion;
+            System.debug('Se penalizo por exceso y ahora la ultima posicion es: ' + movePosition);
+            spot(board, movePosition);
+        }
+        System.debug('Termino el turno y esta en la posicion: ' + movePosition);
+        System.debug('----------------------------');
+        return movePosition;
+    }
+    
+    //Metodo auxiliar para la correcta ejecucion de moveTurn
+    public Integer spot(List<String> board, Integer move) {
+        if (board[move].contains(':')) {
+            String[] partes = board[move].split(':');
+            String[] movimiento = partes[1].split(' ');
+            Integer casilla = Integer.valueOf(partes[0]);
+            String operacion = movimiento[0];
+            Integer cantidad = Integer.valueOf(movimiento[2]);
+            if ('Escalera'.equals(operacion)) {
+                System.debug('Tiene Escalera');
+                movePosition = casilla + cantidad;
+                System.debug('Subio a: ' + movePosition);
+            } else {
+                System.debug('Tiene Serpiente');
+                movePosition = casilla - cantidad;
+                System.debug('Bajo a: ' + movePosition);
+            }
+        } else {    
+            System.debug('NO tiene Escalera ni Serpiente');
+            movePosition = Integer.valueOf(board[move]);
+        }
+        return movePosition;
+    }
+
+}

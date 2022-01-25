@@ -1,0 +1,64 @@
+public class PruebaSinBonusMain {
+
+    public static void main(){
+
+        //Tablero (Arreglo de posiciones) 
+        List<String> board = new List<String>{
+                    '0:Inicio',
+                    '1', '2', '3:Escalera + 8', '4', '5',
+                    '6:Escalera + 11', '7', '8', '9:Escalera + 9', '10:Escalera + 2',
+                    '11', '12', '13', '14:Serpiente - 10', '15',
+                    '16', '17', '18', '19:Serpiente - 11', '20',
+                    '21', '22:Serpiente - 2', '23', '24:Serpiente - 8', '25'
+                };
+
+        //Valor entero con la posicion por cada iteración            
+        Integer lastPosition = 0;
+
+        //Bucle simulador de lanzamiento de dado
+        do {
+            //Valor entero lanzamiento de dado
+            Integer scoreDice = (Integer) (Math.random() * (1 - 7) + 7);
+            //Valor entero que representa la nueva casilla
+            Integer move = lastPosition + scoreDice;
+
+            try {
+                System.debug('La posicion en el turno es ' + lastPosition);
+                System.debug('El dado cayo en: ' + scoreDice);
+                
+                //Condicion para validar el valor de la casilla
+                if (board[move].contains(':')) {
+                    String[] partes = board[move].split(':');
+                    String[] movimiento = partes[1].split(' ');
+                    Integer casilla = Integer.valueOf(partes[0]);
+                    String operacion = movimiento[0];
+                    Integer cantidad = Integer.valueOf(movimiento[2]);
+                    if ('Escalera'.equals(operacion)) {
+                        System.debug('Tiene Escalera');
+                        lastPosition = casilla + cantidad;
+                        System.debug('Subio a: ' + lastPosition);
+                    } else {
+                        System.debug('Tiene Serpiente');
+                        lastPosition = casilla - cantidad;
+                        System.debug('Bajo a: ' + lastPosition);
+                    }
+                } else {
+                    System.debug('NO tiene Escalera ni Serpiente');
+                    lastPosition = Integer.valueOf(board[move]);
+                }
+                
+                if (lastPosition == 25) {
+                    System.debug('Gano el juego');
+                }
+
+            // Excepción para verificar si se excedio del tamaño del tablero (arreglo) 
+            } catch (ListException  e) {
+                System.debug('Gano el juego por exceso');
+                break;
+            }
+            
+          //Condicion de repeticion
+        } while (lastPosition < 25);
+
+    }
+}

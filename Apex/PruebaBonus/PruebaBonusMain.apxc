@@ -1,0 +1,48 @@
+//Clase main que ejecuta el juego
+public class PruebaBonusMain {
+    
+    public static void main(){ 
+        
+        List<String> board = new List<String>{
+                    '0:Inicio',
+                    '1', '2', '3:Escalera + 8', '4', '5',
+                    '6:Escalera + 11', '7', '8', '9:Escalera + 9', '10:Escalera + 2',
+                    '11', '12', '13', '14:Serpiente - 10', '15',
+                    '16', '17', '18', '19:Serpiente - 11', '20',
+                    '21', '22:Serpiente - 2', '23', '24:Serpiente - 8', '25'
+                };
+        
+        //Instancia de gameTurn de la clase Turn par acceder a sus metodos
+        Turn gameTurn = new Turn();
+
+        // Declaración de Arreglo de Jugadores que almacena su posicion y se
+        // dimensiona segun el numero de jugadores que jugaran en este caso jugaran 2.
+        Player[] players = new Player[2];
+        
+        //Instancia de cada uno los jugadores e inicializacion de su posicion inicial
+        for (Integer i = 0; i < players.size(); i++) {
+            players[i] = new Player(0);
+        }
+        
+        //Variable entera para verificar cuando llego a la meta y gano el juego
+        Integer hightPosition = 0;
+   
+        //Bucle que simula el turno de cada jugador
+        do {
+            for (Integer i = 0; i < players.size(); i++) {
+
+                System.debug('El Jugador ' + i + ' lanzo el dado');
+                gameTurn.diceThrow();
+                players[i].setLastPosition(gameTurn.moveTurn(board, players[i].getLastPosition()));
+                hightPosition = players[i].getLastPosition();
+
+                if (hightPosition == 25) {
+                    System.debug('El jugador ' + i + ' ha ganado el juego');
+                    break;
+                }
+            }
+
+        } while (hightPosition < board.size() - 1);
+
+    }
+}
