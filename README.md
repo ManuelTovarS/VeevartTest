@@ -19,8 +19,8 @@ PruebaSinBonus (específicamente los bonus 1 y 2) Contiene una sola clase Main c
 
 Para ejecutar en Apex Salesforce se debe abrir los archivos que contienen las clases que contienen la palabra Main y posteriormente ir al menu Debug -> Open Exceute Anonymous Window e ingresar el siguiente comando dependiendo del archivo:
 
-PruebaSinBonusMain => PruebaBonusMain.main();
-PruebaBonusMain => PruebaSinBonusMain.main();
+PruebaSinBonusMain =>  PruebaSinBonusMain.main();
+PruebaBonusMain =>   PruebaBonusMain.main();
 
 
 
